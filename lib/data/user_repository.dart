@@ -4,6 +4,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
+  // ignore: non_constant_identifier_names
+  static const String KEY_TOKEN = 'token';
   String baseUrl = 'https://lovepeople-todo.onrender.com/api/';
 
   Future<String?> login(String email, String senha) {
@@ -45,6 +47,6 @@ class UserRepository {
 
   Future<void> logout() async {
     final prefs = await SharedPreferences.getInstance();
-    prefs.remove('token');
+    prefs.remove(KEY_TOKEN);
   }
 }

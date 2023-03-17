@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_lovepeople/data/model/todo.dart';
+import 'package:todo_lovepeople/data/user_repository.dart';
 
 class TodoRepository {
   String baseUrl = 'https://lovepeople-todo.onrender.com/api/';
@@ -10,7 +11,7 @@ class TodoRepository {
   Future<List<Todo>> getList() async {
     final prefs = await SharedPreferences.getInstance();
 
-    String? token = prefs.getString('token');
+    String? token = prefs.getString(UserRepository.KEY_TOKEN);
     Uri uri = Uri.parse('${baseUrl}todos');
     return http.get(
       uri,
@@ -36,7 +37,7 @@ class TodoRepository {
   ) async {
     Uri uri = Uri.parse('${baseUrl}todos');
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = prefs.getString(UserRepository.KEY_TOKEN);
 
     Map<String, dynamic> body = {
       'data': {
@@ -64,7 +65,7 @@ class TodoRepository {
 
   Future<bool> delete(String id) async {
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? token = prefs.getString(UserRepository.KEY_TOKEN);
 
     Uri uri = Uri.parse('${baseUrl}todos/$id');
 
