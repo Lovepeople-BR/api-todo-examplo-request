@@ -46,55 +46,16 @@ class _RegisterTodoPageState extends State<RegisterTodoPage> {
                   child: ListView(
                     scrollDirection: Axis.horizontal,
                     children: [
-                      InkWell(
-                        onTap: () {
-                          controller.changeColor('#FF0000');
-                        },
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.red.withOpacity(
-                              controller.colorSelected == '#FF0000' ? 1 : 0.2,
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                      ),
+                      _buildItemColor('#FF0000', controller),
                       const SizedBox(width: 10),
-                      InkWell(
-                        onTap: () {
-                          controller.changeColor('#2986cc');
-                        },
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.blue.withOpacity(
-                              controller.colorSelected == '#2986cc' ? 1 : 0.2,
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                      ),
+                      _buildItemColor('#2986cc', controller),
                       const SizedBox(width: 10),
-                      InkWell(
-                        onTap: () {
-                          controller.changeColor('#8fce00');
-                        },
-                        child: Container(
-                          width: 50,
-                          height: 50,
-                          decoration: BoxDecoration(
-                            color: Colors.green.withOpacity(
-                              controller.colorSelected == '#8fce00' ? 1 : 0.2,
-                            ),
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                      ),
+                      _buildItemColor('#8fce00', controller),
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 20,
                 ),
                 const SizedBox(
                   height: 20,
@@ -104,10 +65,12 @@ class _RegisterTodoPageState extends State<RegisterTodoPage> {
                   child: ElevatedButton(
                     onPressed: () {
                       controller.register(
-                          _titleController.text, _descriptionController.text,
-                          success: () {
-                        Navigator.pop(context, true);
-                      });
+                        _titleController.text,
+                        _descriptionController.text,
+                        success: () {
+                          Navigator.pop(context, true);
+                        },
+                      );
                     },
                     child: const Text('Salvar'),
                   ),
@@ -118,5 +81,26 @@ class _RegisterTodoPageState extends State<RegisterTodoPage> {
         ),
       );
     });
+  }
+
+  Widget _buildItemColor(
+    String colorHex,
+    RegisterTodoController controller,
+  ) {
+    return InkWell(
+      onTap: () {
+        controller.changeColor(colorHex);
+      },
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: Color(int.parse(colorHex.replaceAll('#', '0xFF'))).withOpacity(
+            controller.colorSelected == colorHex ? 1 : 0.2,
+          ),
+          borderRadius: BorderRadius.circular(25),
+        ),
+      ),
+    );
   }
 }

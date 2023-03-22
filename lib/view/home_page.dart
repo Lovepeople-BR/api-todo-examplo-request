@@ -130,8 +130,10 @@ class HomePage extends StatelessWidget {
 
   Color _getColor(String color) {
     try {
-      String c = color.replaceAll('#', '');
-      return Color(int.parse('0xFF$c'));
+      if (color.toUpperCase().contains('0XFF')) {
+        return Color(int.parse(color));
+      }
+      return Color(int.parse(color.replaceAll('#', '0xFF')));
     } catch (e) {
       print(e);
       return Colors.white;
