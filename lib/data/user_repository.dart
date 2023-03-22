@@ -16,10 +16,13 @@ class UserRepository {
         'identifier': email,
         'password': senha,
       },
-    ).then((value) {
+    ).then((value) async {
       if (value.statusCode == 200) {
         Map json = jsonDecode(value.body);
-        return json['jwt'];
+        String token = json['jwt'];
+        var prefs = await SharedPreferences.getInstance();
+        prefs.setString(UserRepository.KEY_TOKEN, token);
+        return token;
       } else {
         return null;
       }
@@ -43,6 +46,12 @@ class UserRepository {
         return null;
       }
     });
+  }
+
+  Future<bool> isLogged() async {
+    var prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString(UserRepository.KEY_TOKEN);
+    return token != null && token.isNotEmpty;
   }
 
   Future<void> logout() async {

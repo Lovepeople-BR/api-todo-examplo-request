@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_lovepeople/data/user_repository.dart';
 
 class LoginController extends ChangeNotifier {
@@ -15,8 +14,6 @@ class LoginController extends ChangeNotifier {
   }) {
     userRepository.login(email, senha).then((value) async {
       if (value != null) {
-        var prefs = await SharedPreferences.getInstance();
-        prefs.setString(UserRepository.KEY_TOKEN, value);
         success?.call();
       } else {
         failure?.call();
@@ -27,9 +24,8 @@ class LoginController extends ChangeNotifier {
   }
 
   void verifyLogin(VoidCallback logged) async {
-    var prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString(UserRepository.KEY_TOKEN);
-    if (token != null && token.isNotEmpty) {
+    bool isLogged = await userRepository.isLogged();
+    if (isLogged) {
       logged();
     }
   }

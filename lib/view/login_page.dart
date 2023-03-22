@@ -3,6 +3,10 @@ import 'package:provider/provider.dart';
 import 'package:todo_lovepeople/controllers/login_controller.dart';
 
 class LoginPage extends StatefulWidget {
+  // ignore:  constant_identifier_names
+  static const KEY_BUTTON_LOGIN = Key('KEY_BUTTON_LOGIN');
+  static const KEY_INPUT_EMAIL = Key('KEY_INPUT_EMAIL');
+  static const KEY_INPUT_PASS = Key('KEY_INPUT_PASS');
   const LoginPage({super.key});
 
   @override
@@ -29,12 +33,14 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontSize: 40),
                   ),
                   TextFormField(
+                    key: LoginPage.KEY_INPUT_EMAIL,
                     controller: _emailController,
                     decoration: const InputDecoration(
                       label: Text('E-mail'),
                     ),
                   ),
                   TextFormField(
+                    key: LoginPage.KEY_INPUT_PASS,
                     controller: _senhaController,
                     decoration: const InputDecoration(
                       label: Text('Senha'),
@@ -46,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
                   SizedBox(
                     width: double.maxFinite,
                     child: ElevatedButton(
+                      key: LoginPage.KEY_BUTTON_LOGIN,
                       onPressed: () {
                         controller.login(
                           _emailController.text,
