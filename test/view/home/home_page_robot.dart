@@ -38,36 +38,66 @@ class HomePageRobot extends Robot {
     await tester.pumpAndSettle();
   }
 
+  Future<void> didTapExit() async {
+    await tester.tap(find.byKey(HomePage.KEY_EXIT_BUTTON));
+    await tester.pumpAndSettle();
+  }
+
+  Future<void> didTapDeleteFirstItem() async {
+    await tester.tap(find.byKey(HomePage.KEY_DELETE_BUTTON).first);
+    await tester.pumpAndSettle();
+  }
+
   void assetCallRegisterPage() {
     assetNavigatorPush('/register-todo');
   }
 
+  void assetCallLoginPage() {
+    assetNavigatorPush('/');
+  }
+
+  void assetCallLogout() {
+    verify(() => userRepository.logout()).called(1);
+  }
+
   _confMock() {
+    when(() => userRepository.logout()).thenAnswer((_) {
+      return Future.value();
+    });
     when(() => todoRepository.getList()).thenAnswer((_) {
-      return Future.value([
-        Todo(
+      return Future.value(
+        [
+          Todo(
             id: 12345,
             attributes: Attributes(
                 color: '#FF0000',
                 title: 'Teste todo',
-                description: 'Todo description description')),
-        Todo(
+                description: 'Todo description description'),
+          ),
+          Todo(
             id: 1234235,
             attributes: Attributes(
                 color: '#2986cc',
                 title: 'Teste todo',
-                description: 'Todo description description')),
-        Todo(
+                description: 'Todo description description'),
+          ),
+          Todo(
             id: 1234345,
             attributes: Attributes(
                 color: '#8fce00',
                 title: 'Teste todo',
-                description: 'Todo description description')),
-      ]);
+                description: 'Todo description description'),
+          ),
+        ],
+      );
     });
   }
 
   Future<void> assetSnapshotShowScreen() {
     return takeSnapshot('HomePage_show');
+  }
+
+  Future<void> assetSnapshotShowDeleteDialog() {
+    return takeSnapshot('HomePage_show_delete_dialog');
   }
 }

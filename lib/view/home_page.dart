@@ -4,6 +4,9 @@ import 'package:todo_lovepeople/controllers/home_controller.dart';
 import 'package:todo_lovepeople/data/model/todo.dart';
 
 class HomePage extends StatelessWidget {
+  // ignore: constant_identifier_names
+  static const KEY_DELETE_BUTTON = Key('KEY_DELETE_BUTTON');
+  static const KEY_EXIT_BUTTON = Key('KEY_EXIT_BUTTON');
   const HomePage({super.key});
 
   @override
@@ -16,6 +19,7 @@ class HomePage extends StatelessWidget {
             title: const Text('Home'),
             actions: [
               IconButton(
+                key: HomePage.KEY_EXIT_BUTTON,
                 onPressed: () async {
                   await controller.logout();
                   if (context.mounted) {
@@ -44,6 +48,7 @@ class HomePage extends StatelessWidget {
                       children: [
                         Expanded(child: Text(item.attributes?.title ?? '')),
                         IconButton(
+                          key: HomePage.KEY_DELETE_BUTTON,
                           onPressed: () => _delete(context, item, controller),
                           icon: Container(
                             decoration: BoxDecoration(
