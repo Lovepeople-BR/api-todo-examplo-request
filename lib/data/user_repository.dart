@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:todo_lovepeople/main.dart';
 
 class UserRepository {
-  // ignore: non_constant_identifier_names
+  // ignore: constant_identifier_names
   static const String KEY_TOKEN = 'token';
-  String baseUrl = 'https://lovepeople-todo.onrender.com/api/';
+  String baseUrl = apiUrl;
 
   Future<String?> login(String email, String senha) {
     Uri uri = Uri.parse('${baseUrl}auth/local');

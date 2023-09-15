@@ -6,6 +6,7 @@ import 'package:todo_lovepeople/data/model/todo.dart';
 class HomePage extends StatelessWidget {
   // ignore: constant_identifier_names
   static const KEY_DELETE_BUTTON = Key('KEY_DELETE_BUTTON');
+  // ignore: constant_identifier_names
   static const KEY_EXIT_BUTTON = Key('KEY_EXIT_BUTTON');
   const HomePage({super.key});
 
